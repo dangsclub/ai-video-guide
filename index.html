@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 영상 편집 완벽 가이드</title>
+  <style>
+    :root {
+      --primary-color: #4F46E5;
+      --bg-color: #F9FAFB;
+      --card-bg: #FFFFFF;
+      --text-main: #111827;
+      --text-sub: #4B5563;
+      --border-color: #E5E7EB;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.6;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      margin: 0;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    h1 {
+      font-size: 2.25rem;
+      color: var(--primary-color);
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: var(--text-sub);
+      font-size: 1.1rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      border: 1px solid var(--border-color);
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      border-bottom: 2px solid var(--primary-color);
+      padding-bottom: 8px;
+      margin-top: 0;
+    }
+
+    .workflow-steps {
+      background-color: #EEF2FF;
+      padding: 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      color: var(--primary-color);
+      text-align: center;
+      margin: 16px 0;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    li {
+      margin-bottom: 12px;
+    }
+
+    .tool-tag {
+      display: inline-block;
+      background: #E0E7FF;
+      color: #3730A3;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+    }
+
+    th, td {
+      border: 1px solid var(--border-color);
+      padding: 12px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #F3F4F6;
+    }
+
+    .code-block {
+      background: #1E293B;
+      color: #F8FAFC;
+      padding: 12px;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 0.9rem;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>AI 영상 편집 완벽 가이드</h1>
+    <p class="subtitle">자동화 편집부터 생성형 AI 워크플로우까지 한눈에 보기</p>
+  </header>
+
+  <!-- Section 1 -->
+  <section class="card">
+    <h2>1. 기존 촬영본 다듬기 (자동화 편집)</h2>
+    <div class="workflow-steps">
+      [원천 영상] ➔ [AI 컷 편집/무음 제거] ➔ [자동 자막 생성] ➔ [음성 보정] ➔ [출력]
+    </div>
+    <ul>
+      <li>
+        <strong>1단계: 무음 제거 & 컷 편집</strong> <span class="tool-tag">CapCut</span> <span class="tool-tag">Vrew</span><br>
+        말 사이의 침묵이나 추임새("어...", "음...")를 텍스트 편집하듯 자동으로 삭제합니다.
+      </li>
+      <li>
+        <strong>2단계: 자동 자막(STT) & 번역</strong> <span class="tool-tag">Vrew</span> <span class="tool-tag">Premiere Pro</span><br>
+        음성을 인지하여 타임라인에 맞는 자막을 생성하고 강조 효과를 적용합니다.
+      </li>
+      <li>
+        <strong>3단계: 음성 보정 & AI 보이스</strong> <span class="tool-tag">Adobe Podcast</span> <span class="tool-tag">ElevenLabs</span><br>
+        마이크 잡음을 스튜디오 급으로 지우거나, 대본을 바탕으로 고품질 AI 성우 음성을 입힙니다.
+      </li>
+    </ul>
+  </section>
+
+  <!-- Section 2 -->
+  <section class="card">
+    <h2>2. 텍스트·이미지로 새로운 클립 생성</h2>
+    <ul>
+      <li>
+        <strong>1단계: AI 스토리보드 작성</strong> <span class="tool-tag">ChatGPT</span> <span class="tool-tag">Claude</span>
+        <div class="code-block">"유튜브 쇼츠용 30초 분량 영상 대본 작성해 줘. 주제는 '아침 10분 스트레칭의 효과'. 장면별 영상 묘사, 대사, 카메라 앵글을 나누어 표로 작성해 줘."</div>
+      </li>
+      <li>
+        <strong>2단계: 비디오 클립 생성 (Text-to-Video)</strong> <span class="tool-tag">Runway</span> <span class="tool-tag">Kling AI</span> <span class="tool-tag">Midjourney</span><br>
+        이미지나 텍스트 프롬프트를 조합해 동적인 비디오 클립을 만들어냅니다.<br>
+        <em>* 프롬프트 구조: [대상] + [세부 동작] + [카메라 무빙] + [조명/분위기]</em>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Section 3 -->
+  <section class="card">
+    <h2>3. 초보자 추천 종합 AI 편집 툴</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>구분</th>
+          <th>추천 툴</th>
+          <th>주요 특징</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>초보/숏폼</strong></td>
+          <td>CapCut</td>
+          <td>자동 자막, AI 배경 제거, 비트 싱크 무료 제공</td>
+        </tr>
+        <tr>
+          <td><strong>텍스트 기반</strong></td>
+          <td>Vrew</td>
+          <td>대본 입력 시 컷, 스톡 영상, AI 음성, 자막 자동 구성</td>
+        </tr>
+        <tr>
+          <td><strong>디자인/웹</strong></td>
+          <td>Canva / Filmora</td>
+          <td>템플릿 기반으로 AI 동영상 자동 구성</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</div>
+
+</body>
+</html>
