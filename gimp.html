@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GIMP 스크립트 예제 | AI 영상 편집 완벽 가이드</title>
+  <style>
+    :root { --primary-color: #4F46E5; --bg-color: #F9FAFB; --card-bg: #FFFFFF; --text-main: #111827; --text-sub: #4B5563; --border-color: #E5E7EB; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.65; background: var(--bg-color); color: var(--text-main); margin: 0; padding: 32px 18px; }
+    .container { max-width: 860px; margin: 0 auto; }
+    header { margin-bottom: 24px; }
+    h1 { color: var(--primary-color); font-size: 2rem; margin-bottom: 4px; }
+    h2 { font-size: 1.3rem; margin: 0 0 10px; }
+    h3 { font-size: 1.05rem; margin: 22px 0 6px; }
+    .subtitle, .note { color: var(--text-sub); }
+    nav { margin-bottom: 18px; }
+    a { color: var(--primary-color); }
+    .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 22px; margin: 16px 0; }
+    pre { overflow-x: auto; background: #1E293B; color: #F8FAFC; padding: 14px; border-radius: 6px; font-size: .9rem; line-height: 1.5; }
+    code { font-family: Consolas, "Courier New", monospace; }
+    .note { background: #EEF2FF; padding: 12px 14px; border-radius: 6px; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <nav><a href="index.html">← AI 영상 편집 완벽 가이드</a></nav>
+  <header>
+    <h1>GIMP 스크립트 예제</h1>
+    <p class="subtitle">썸네일과 그래픽 작업을 Python 플러그인으로 반복 자동화합니다.</p>
+  </header>
+  <section class="card">
+    <h2>실행 준비</h2>
+    <p>아래 예제는 <strong>GIMP 3.x Python 플러그인</strong> 기준입니다. GIMP 2.10의 Python-Fu는 실행 환경과 API가 다르므로 그대로 호환되지 않습니다.</p>
+    <ol>
+      <li>아래 플러그인 틀을 <code>video_guide.py</code>로 저장합니다.</li>
+      <li>GIMP의 환경 설정에서 플러그인 폴더를 확인하고 파일을 해당 폴더에 넣습니다. 필요하면 파일에 실행 권한을 부여합니다.</li>
+      <li>GIMP를 다시 실행하고 이미지에서 <strong>Filters → Development → Video Guide</strong>를 선택합니다.</li>
+      <li>각 예제 코드를 틀 안의 <code>run()</code> 함수 본문에 넣어 한 번에 하나씩 실행합니다.</li>
+    </ol>
+    <pre><code>#!/usr/bin/env python3
+import sys
+from gi.repository import Gimp, GLib
+
+class VideoGuidePlugin(Gimp.PlugIn):
+    def do_query_procedures(self):
+        return ["python-fu-video-guide"]
+
+    def do_create_procedure(self, name):
+        procedure = Gimp.ImageProcedure.new(
+            self, name, Gimp.PDBProcType.PLUGIN, self.run, None
+        )
+        procedure.set_image_types("*")
+        procedure.set_menu_label("Video Guide")
+        procedure.add_menu_path("&lt;Image&gt;/Filters/Development")
+        procedure.set_documentation(
+            "Video Guide examples", "Small image workflow helpers", name
+        )
+        procedure.set_attribution("Video Guide", "Video Guide", "2026")
+        return procedure
+
+    def run(self, procedure, run_mode, image, drawables, config, run_data):
+        # 예제 코드를 이 위치에 넣으세요.
+        Gimp.message("Video Guide plugin is running")
+        return procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
+
+Gimp.main(VideoGuidePlugin.__gtype__, sys.argv)</code></pre>
+  </section>
+  <section class="card">
+    <h2>예제 1. 캔버스 크기 확인</h2>
+    <p>현재 이미지의 가로·세로 픽셀을 확인합니다. 썸네일 비율이나 리사이즈 전 점검에 활용하세요.</p>
+    <pre><code>width = image.get_width()
+height = image.get_height()
+Gimp.message(f"현재 캔버스: {width} x {height}px")</code></pre>
+  </section>
+  <section class="card">
+    <h2>예제 2. 레이어 이름 일괄 정리</h2>
+    <p>현재 이미지의 레이어 이름을 위에서부터 순서대로 지정합니다.</p>
+    <pre><code>for index, layer in enumerate(image.get_layers(), start=1):
+    layer.set_name(f"영상소스_{index:02d}")
+
+Gimp.message("레이어 이름을 정리했습니다.")</code></pre>
+  </section>
+  <section class="card">
+    <h2>예제 3. 이미지에 안내 메시지 표시</h2>
+    <p>이미지를 열지 않았거나 레이어가 없는 상황을 점검할 때 사용할 수 있는 기본 가드입니다.</p>
+    <pre><code>layers = image.get_layers()
+if not layers:
+    Gimp.message("먼저 작업할 레이어를 추가하세요.")
+else:
+    names = ", ".join(layer.get_name() for layer in layers)
+    Gimp.message(f"레이어 {len(layers)}개: {names}")</code></pre>
+    <p class="note">원본에 바로 적용하기 전에 이미지 사본으로 테스트하세요. GIMP 3의 플러그인 API와 메뉴 위치는 업데이트에 따라 바뀔 수 있으니 설치한 버전의 문서를 확인하세요.</p>
+  </section>
+</div>
+</body>
+</html>
